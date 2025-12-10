@@ -1,0 +1,23 @@
+---
+- name: Debug Configuration Commands
+  hosts: routers
+  gather_facts: no
+  connection: network_cli
+  
+  tasks:
+    - name: Show what commands are sent (with debug)
+      cisco.ios.ios_config:
+        lines:
+          - description Test Debug
+        parents: interface Loopback0
+      register: config_output
+      vars:
+        ansible_command_timeout: 60  # Increase timeout for slow devices
+    
+    - name: Display ALL registered output
+      debug:
+        var: config_output
+    
+    - name: Display only the diff (what changed)
+      debug:
+        var: config_output.diff

@@ -1,0 +1,14 @@
+---
+- name: Change all routers hostname
+  hosts: routers
+  gather_facts: no
+
+  tasks:
+    - name: change hostname
+      cisco.ios.ios_config:
+        lines:
+          - hostname {{ host_name }}
+    
+    - name: Save configuration
+      cisco.ios.ios_config:
+        save_when: changed

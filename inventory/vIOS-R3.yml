@@ -7,9 +7,9 @@ interfaces:
     description: ""
   - name: GigabitEthernet0/3
     description: ""
-  ip_address: "192.168.31.237
-  subnet_mask: "24
+    ip_address: "192.168.31.237"
+    subnet_mask: "24"
   - name: Loopback0
     description: "Managed by Ansible"
-  ip_address: "3.3.3.3
-  subnet_mask: "32
+    ip_address: "3.3.3.3"
+    subnet_mask: "32"
