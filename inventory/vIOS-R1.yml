@@ -1,0 +1,15 @@
+interfaces:
+  - name: GigabitEthernet0/0
+    description: ""
+  - name: GigabitEthernet0/1
+    description: ""
+  ip_address: "192.168.31.225
+  subnet_mask: "24
+  - name: GigabitEthernet0/2
+    description: ""
+  - name: GigabitEthernet0/3
+    description: ""
+  - name: Loopback0
+    description: "Managed by Ansible"
+  ip_address: "1.1.1.1
+  subnet_mask: "32
