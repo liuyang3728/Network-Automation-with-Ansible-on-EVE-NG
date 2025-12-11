@@ -1,0 +1,17 @@
+---
+
+- name: show interface which are up
+  hosts: routers
+  gather_facts: no
+
+  tasks:
+    - name: show interface with ios commands
+      cisco.ios.ios_command:
+        commands:
+          - show interface description
+          - show ip interface brief | include up
+      register: interface_result
+
+    - name: output the interface_result
+      debug:
+        msg: "{{ interface_result.stdout_lines }}"

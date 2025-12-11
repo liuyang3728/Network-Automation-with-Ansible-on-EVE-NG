@@ -1,0 +1,14 @@
+---
+- name: Check file loading
+  hosts: routers
+  gather_facts: no
+
+  tasks:
+    - name: Load and display the file
+      include_vars:
+        file: "./inventory/router_interfaces.yml"
+        name: loaded_vars
+    
+    - name: Show what was loaded
+      debug:
+        var: loaded_vars

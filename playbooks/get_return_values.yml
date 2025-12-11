@@ -1,0 +1,51 @@
+---
+- name: Show Cisco Facts Structure CLEARLY
+  hosts: vIOS-R1
+  gather_facts: no
+
+  tasks:
+    - name: Get IOS facts
+      cisco.ios.ios_facts:
+        gather_subset: all
+      register: cisco_facts
+
+    # Show structure in a readable way
+    - name: Show Top-Level Structure
+      debug:
+        msg: |
+          ===========================================
+          TOP-LEVEL KEYS in 'cisco_facts':
+          ===========================================
+          • ansible_facts  → (Main facts data)
+          • changed        → {{ cisco_facts.changed }}
+          • failed         → {{ cisco_facts.failed }}
+
+    - name: Show Available Facts
+      debug:
+        msg: |
+          ===========================================
+          FACTS AVAILABLE (all start with 'ansible_net_'):
+          ===========================================
+          {% for fact in cisco_facts.ansible_facts.keys() | sort %}
+          {{ "%3d" | format(loop.index) }}. {{ fact }}
+          {% endfor %}
+
+    - name: Show Example Interface Structure
+      debug:
+        msg: |
+          ===========================================
+          EXAMPLE: Interface structure
+          ===========================================
+          {% if 'ansible_net_interfaces' in cisco_facts.ansible_facts %}
+          Number of interfaces found: {{ cisco_facts.ansible_facts.ansible_net_interfaces.keys() | list | length }}
+          
+          First interface: {{ cisco_facts.ansible_facts.ansible_net_interfaces.keys() | list | first }}
+          
+          Interface keys for {{ cisco_facts.ansible_facts.ansible_net_interfaces.keys() | list | first }}:
+          {% set first_intf = cisco_facts.ansible_facts.ansible_net_interfaces.keys() | list | first %}
+          {% for key in cisco_facts.ansible_facts.ansible_net_interfaces[first_intf].keys() | sort %}
+          - {{ key }}
+          {% endfor %}
+          {% else %}
+          No interface facts collected!
+          {% endif %}

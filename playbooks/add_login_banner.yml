@@ -1,0 +1,16 @@
+---
+
+- name: Configure router banner
+  hosts: routers
+  gather_facts: no
+
+  tasks:
+    - name: Set login banner
+      cisco.ios.ios_banner:
+        banner: login
+        text: |
+          Unauthorized access prohibited.
+          Well, I don't think anyone can login this router.
+          Except me!
+          Liu Yang daociyiyou
+        state: present

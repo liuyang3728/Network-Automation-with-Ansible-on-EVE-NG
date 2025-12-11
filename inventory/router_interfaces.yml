@@ -1,0 +1,10 @@
+interfaces:
+  R1:
+    - { intf: 'GigabitEthernet0/0', desc: 'osfp interface to R2', ip: '10.1.12.1', mask: '255.255.255.0' }
+
+  R2:
+    - { intf: 'GigabitEthernet0/0', desc: 'osfp interface to R1', ip: '10.1.12.2', mask: '255.255.255.0' }
+    - { intf: 'GigabitEthernet0/1', desc: 'osfp interface to R3', ip: '10.1.23.2', mask: '255.255.255.0' }
+
+  R3:
+    - { intf: 'GigabitEthernet0/1', desc: 'osfp interface to R2', ip: '10.1.23.3', mask: '255.255.255.0' }  
