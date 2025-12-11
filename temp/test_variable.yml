@@ -1,0 +1,19 @@
+---
+- name: Test ospf_processes variable WITH loading
+  hosts: routers
+  gather_facts: no
+
+  tasks:
+    # FIRST: Load variables from host_vars
+    - name: Load host variables
+      include_vars:
+        file: "{{ playbook_dir }}/../host_vars/{{ inventory_hostname }}.yml"
+    
+    # NOW test
+    - name: Check if ospf_processes exists
+      debug:
+        msg: "ospf_processes is defined: {{ ospf_processes is defined }}"
+    
+    - name: Show ospf_processes variable
+      debug:
+        var: ospf_processes

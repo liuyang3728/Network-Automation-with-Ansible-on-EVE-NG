@@ -24,3 +24,6 @@ ospf_processes:
       - address: 2.2.2.2
         wildcard_bits: 0.0.0.0
         area: 1
+      - address: 10.1.23.0
+        wildcard_bits: 0.0.0.255
+        area: 1

@@ -3,6 +3,7 @@
 - name: Configure OSPF on cisco routers
   hosts: routers
   gather_facts: no
+  
 
   tasks:
     - name: Deploy OSPF Configuration

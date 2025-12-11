@@ -1,0 +1,65 @@
+# diagnose_ospf.yml
+---
+- name: Comprehensive OSPF Diagnostic
+  hosts: routers
+  gather_facts: no
+
+  tasks:
+    # 1. Check OSPF neighbor status
+    - name: Check OSPF neighbors
+      cisco.ios.ios_command:
+        commands:
+          - show ip ospf neighbor
+      register: ospf_neighbors
+
+    # 2. Check OSPF interfaces
+    - name: Check OSPF interfaces
+      cisco.ios.ios_command:
+        commands:
+          - show ip ospf interface brief
+      register: ospf_interfaces
+
+    # 3. Check OSPF process
+    - name: Check OSPF process
+      cisco.ios.ios_command:
+        commands:
+          - show ip ospf
+      register: ospf_process
+
+    # 4. Check interface configurations
+    - name: Check interface IP configurations
+      cisco.ios.ios_command:
+        commands:
+          - show ip interface brief | include up
+      register: interfaces_up
+
+    # 5. Check routing table for OSPF routes
+    - name: Check OSPF routes
+      cisco.ios.ios_command:
+        commands:
+          - show ip route ospf
+      register: ospf_routes
+
+    # 6. Display results
+    - name: Display OSPF Neighbors
+      debug:
+        msg: "{{ inventory_hostname }} OSPF Neighbors:\n{{ ospf_neighbors.stdout[0] }}"
+      when: ospf_neighbors.stdout[0] | length > 0
+
+    - name: Display OSPF Interfaces
+      debug:
+        msg: "{{ inventory_hostname }} OSPF Interfaces:\n{{ ospf_interfaces.stdout[0] }}"
+      when: ospf_interfaces.stdout[0] | length > 0
+
+    - name: Display OSPF Process
+      debug:
+        msg: "{{ inventory_hostname }} OSPF Process:\n{{ ospf_process.stdout[0] }}"
+      when: ospf_process.stdout[0] | length > 0
+
+    - name: Display Up Interfaces
+      debug:
+        msg: "{{ inventory_hostname }} Up Interfaces:\n{{ interfaces_up.stdout[0] }}"
+
+    - name: Display OSPF Routes
+      debug:
+        msg: "{{ inventory_hostname }} OSPF Routes:\n{{ ospf_routes.stdout[0] }}"
